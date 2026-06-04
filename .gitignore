@@ -1,16 +1,23 @@
-# dependencies
+# Dependencies
 node_modules/
 
-# environment variables
+# Environment files
 .env
-.env.local
+.env.*
+backend/.env
+frontend/.env
 
-# build files
+# Build output
 dist/
 build/
 
-# logs
+# Logs
 *.log
+*.err
+
+# IDE
+.vscode/
+.idea/
 
 # OS files
 .DS_Store
