@@ -22,7 +22,7 @@ const ACCENT_STYLES = {
   amber: { card: 'bg-amber-400/8 border-amber-400/15', icon: 'bg-amber-400/10 border-amber-400/20 text-amber-400', text: 'text-amber-400' },
   emerald: { card: 'bg-emerald-400/8 border-emerald-400/15', icon: 'bg-emerald-400/10 border-emerald-400/20 text-emerald-400', text: 'text-emerald-400' },
   rose: { card: 'bg-rose-400/8 border-rose-400/15', icon: 'bg-rose-400/10 border-rose-400/20 text-rose-400', text: 'text-rose-400' },
-  blue: { card: 'bg-sky-400/8 border-sky-400/18', icon: 'bg-sky-400/10 border-sky-400/20 text-sky-300', text: 'text-sky-200' },
+  blue: { card: 'bg-sky-400/8 border-sky-400/15', icon: 'bg-sky-400/10 border-sky-400/20 text-sky-300', text: 'text-sky-200' },
 };
 
 const FAQS = [
