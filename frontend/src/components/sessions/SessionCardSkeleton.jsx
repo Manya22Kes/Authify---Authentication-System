@@ -1,7 +1,3 @@
-/**
- * SessionCardSkeleton.jsx
- * Loading placeholder that exactly mirrors SessionCard's responsive layout.
- */
 
 export default function SessionCardSkeleton() {
   return (

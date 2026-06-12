@@ -1,21 +1,3 @@
-/**
- * ProfileField.jsx
- * Read-only labeled data row.
- *
- * Responsive:
- *   Mobile (320px): label sits above value in a stacked column
- *   sm+:            label left, value right (original single-row layout)
- *
- * Long values (IDs, emails, IPs) truncate with title tooltip.
- *
- * Props:
- *   label      {string}
- *   value      {string}
- *   mono       {boolean}   — monospace font
- *   copyable   {boolean}   — clipboard button
- *   truncate   {boolean}   — ellipsis on overflow
- */
-
 import { useState } from 'react';
 
 export default function ProfileField({

@@ -1,8 +1,3 @@
-/**
- * PageLoader.jsx
- * Full-page loading screen shown while restoring session on app startup.
- */
-
 import Spinner from './Spinner';
 
 export default function PageLoader({ message = 'Initialising session…' }) {

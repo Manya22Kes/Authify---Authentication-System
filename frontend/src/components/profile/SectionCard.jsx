@@ -1,21 +1,3 @@
-/**
- * SectionCard.jsx
- * Consistent card wrapper for every profile/dashboard section.
- *
- * Responsive:
- *   Header: px-4 sm:px-6  — tighter on mobile
- *   Body:   px-4 sm:px-6  — same
- *   All text truncates within min-w-0 containers.
- *
- * Props:
- *   title       {string}
- *   description {string}
- *   icon        {ReactNode}
- *   action      {ReactNode}   — pinned to right of header
- *   noPad       {boolean}     — skip body padding (flush rows)
- *   className   {string}
- *   children    {ReactNode}
- */
 
 export default function SectionCard({
   title,

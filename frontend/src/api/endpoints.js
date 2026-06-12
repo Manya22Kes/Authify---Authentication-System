@@ -27,6 +27,5 @@ export const ENDPOINTS = {
   // GITHUB_OAUTH: '/auth/github',
   // MFA_SETUP: '/auth/mfa/setup',
   // MFA_VERIFY: '/auth/mfa/verify',
-  // SESSIONS: '/auth/sessions',
   // AUDIT_LOGS: '/auth/audit-logs',
 };

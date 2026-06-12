@@ -1,11 +1,3 @@
-/**
- * AuthMethodRow.jsx
- * A single auth method row inside the Authentication Methods card.
- *
- * Responsive: label + description truncate on narrow screens;
- * status indicator always stays right-aligned.
- * Touch target: min-height 44px on mobile via py-3.
- */
 
 const STATUS_STYLES = {
   active:   { dot: 'bg-emerald-400', text: 'text-emerald-400', label: 'Active' },

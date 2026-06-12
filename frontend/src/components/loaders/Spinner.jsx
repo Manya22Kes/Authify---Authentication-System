@@ -1,7 +1,3 @@
-/**
- * Spinner.jsx
- * Minimal animated loading indicator.
- */
 
 export default function Spinner({ size = 'md', color = 'light', className = '' }) {
   const sizes = {

@@ -1,12 +1,3 @@
-/**
- * FormFeedback.jsx
- * Inline success or error message used below profile forms.
- * Animates in on mount. Auto-dismissible via a timeout in the parent.
- *
- * Props:
- *   type    {'success' | 'error'}
- *   message {string}
- */
 
 const STYLES = {
   success: {

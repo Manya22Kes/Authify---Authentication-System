@@ -1,12 +1,3 @@
-/**
- * EditProfileSection.jsx
- * Allows the user to update their display name.
- *
- * On save:
- *  1. Calls profileService.updateProfile({ name })
- *  2. Calls updateUser() from AuthContext to sync changes everywhere
- *  3. Shows inline success/error feedback
- */
 
 import { useState } from 'react';
 import toast from 'react-hot-toast';

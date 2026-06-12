@@ -1,9 +1,3 @@
-/**
- * VerificationStatusSection.jsx
- * Displays email verification status on the profile page.
- * Mirrors the dashboard card but lives in the profile flow.
- * Resend logic is self-contained (own cooldown state).
- */
 
 import { useState } from 'react';
 import toast from 'react-hot-toast';

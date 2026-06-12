@@ -1,10 +1,3 @@
-/**
- * PasswordStrengthBar.jsx
- * Visual password strength indicator with a segmented bar and requirement checklist.
- *
- * Props:
- *   password {string}
- */
 
 const REQUIREMENTS = [
   { label: 'At least 8 characters',        test: (p) => p.length >= 8 },

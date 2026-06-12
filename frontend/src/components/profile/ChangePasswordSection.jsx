@@ -1,13 +1,3 @@
-/**
- * ChangePasswordSection.jsx
- * Password change form with strength indicator and requirement checklist.
- *
- * Flow:
- *  1. User fills current password + new password + confirm
- *  2. Client validates (match, strength minimum)
- *  3. PATCH /users/change-password
- *  4. Show success state — form resets
- */
 
 import { useState } from 'react';
 import toast from 'react-hot-toast';

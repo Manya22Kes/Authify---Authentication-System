@@ -1,13 +1,3 @@
-/**
- * RoleRoute.jsx
- * Guards routes by user role.
- * Must be nested inside <ProtectedRoute> (auth is already confirmed).
- *
- * Usage:
- *   <Route element={<RoleRoute roles={['admin']} />}>
- *     <Route path="/admin" element={<AdminDashboard />} />
- *   </Route>
- */
 
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';

@@ -1,11 +1,3 @@
-/**
- * DashboardLayout.jsx
- * Shell for all authenticated dashboard pages.
- *
- * Mobile: sidebar is hidden, replaced by a bottom nav bar + slide-out drawer.
- * Tablet (md): sidebar hidden, hamburger in top bar opens slide-out drawer.
- * Desktop (lg+): classic fixed left sidebar, scrollable right content.
- */
 
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';

@@ -1,8 +1,3 @@
-/**
- * ProtectedRoute.jsx
- * Guards routes that require authentication.
- * While session is being restored, shows a full-page loader.
- */
 
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
