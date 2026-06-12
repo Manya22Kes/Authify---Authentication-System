@@ -1,6 +1,6 @@
 const ACCENTS = {
   amber: 'bg-amber-400/7 border-amber-400/16 text-amber-300',
-  blue: 'bg-sky-400/7 border-sky-400/16 text-sky-200',
+  blue: 'bg-sky-400/7 border-sky-400/10 text-sky-200',
   magenta: 'bg-fuchsia-400/7 border-fuchsia-400/16 text-fuchsia-200',
   neutral: 'bg-obsidian-800/50 border-obsidian-700/65 text-ivory-400/60',
   emerald: 'bg-emerald-400/7 border-emerald-400/16 text-emerald-300',

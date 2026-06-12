@@ -14,7 +14,17 @@ app.use(apiLimiter);
 app.use(express.json({ limit: "10kb" }));
 app.use(
   cors({
-    origin: env.FRONTEND_URL,
+    origin: function (origin, callback) {
+      if (
+        !origin ||
+        origin.includes(".vercel.app") ||
+        origin === env.FRONTEND_URL
+      ) {
+        return callback(null, true);
+      }
+
+      callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   }),
 );
