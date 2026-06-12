@@ -135,7 +135,7 @@ export default function ResetPassword() {
           disabled={isLoading}
         />
 
-        <Button type="submit" variant="primary" fullWidth isLoading={isLoading}>
+        <Button type="submit" variant="primary" fullWidth isLoading={isLoading} loadingText="Updating...">
           Update password
         </Button>
       </form>

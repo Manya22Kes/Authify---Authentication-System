@@ -180,7 +180,7 @@ export default function VerifyEmail() {
             : 'Sign in to request a fresh verification email for your account.'}
         </p>
         {user?.email ? (
-          <Button type="button" variant="secondary" fullWidth isLoading={isResending} onClick={handleResend}>
+          <Button type="button" variant="secondary" fullWidth isLoading={isResending} loadingText="Sending..." onClick={handleResend}>
             Resend verification email
           </Button>
         ) : (

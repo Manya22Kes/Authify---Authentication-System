@@ -1,7 +1,3 @@
-/**
- * FormWrapper.jsx
- * Consistent card container for auth forms.
- */
 
 export default function FormWrapper({ title, subtitle, children, className = '' }) {
   return (

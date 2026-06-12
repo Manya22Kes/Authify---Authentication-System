@@ -1,8 +1,10 @@
 const Joi = require("joi");
 
 exports.signupSchema = Joi.object({
-  name: Joi.string().trim().required().messages({
+  name: Joi.string().trim().min(2).max(50).required().messages({
     "string.empty": "Name is required",
+    "string.min": "Name must be at least 2 characters",
+    "string.max": "Name cannot exceed 50 characters",
   }),
 
   email: Joi.string().email().required().messages({

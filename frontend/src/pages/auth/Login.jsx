@@ -117,6 +117,7 @@ export default function Login() {
           variant="primary"
           fullWidth
           isLoading={isLoading}
+          loadingText="Signing in..."
           className="mt-2"
         >
           Sign in

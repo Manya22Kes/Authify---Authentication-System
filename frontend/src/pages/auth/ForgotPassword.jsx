@@ -101,7 +101,7 @@ export default function ForgotPassword() {
           }
         />
 
-        <Button type="submit" variant="primary" fullWidth isLoading={isLoading}>
+        <Button type="submit" variant="primary" fullWidth isLoading={isLoading} loadingText="Sending...">
           Send reset link
         </Button>
 

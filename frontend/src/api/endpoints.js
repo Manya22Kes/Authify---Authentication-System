@@ -13,8 +13,15 @@ export const ENDPOINTS = {
   FORGOT_PASSWORD: "/auth/forgot-password",
   RESET_PASSWORD: "/auth/reset-password",
 
+  // Profile
+  PROFILE: "/users/profile",
+  UPDATE_PROFILE: "/users/profile",
+  UPLOAD_AVATAR: "/users/avatar",
+  CHANGE_PASSWORD: "/users/password",
+  CHANGE_EMAIL: "/users/change-email",
+  DELETE_ACCOUNT: "/users/account",
+
   // Future: OTP, OAuth, MFA, Sessions
-  // VERIFY_EMAIL: '/auth/verify-email',
   // VERIFY_OTP: '/auth/verify-otp',
   // GOOGLE_OAUTH: '/auth/google',
   // GITHUB_OAUTH: '/auth/github',

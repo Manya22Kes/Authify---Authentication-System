@@ -7,6 +7,12 @@ const {
   testEmailSchema,
 } = require("../validators/auth.validator");
 
+const {
+  updateProfileSchema,
+  updatePasswordSchema,
+  updateEmailSchema,
+} = require("../validators/user.validator");
+
 function cookieOptions() {
   const isProduction = env.NODE_ENV === "production";
 
@@ -294,6 +300,32 @@ exports.testEmail = async (req, res) => {
       success: false,
       message: error.message,
       details: error.details || null,
+    });
+  }
+};
+
+exports.updateEmail = async (req, res) => {
+  try {
+    const { error } = updateEmailSchema.validate(req.body);
+
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: error.details[0].message,
+      });
+    }
+
+    const result = await userService.updateEmail(req.user.id, req.body);
+
+    return res.status(200).json({
+      success: true,
+      message: "Email updated successfully",
+      data: result,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
     });
   }
 };

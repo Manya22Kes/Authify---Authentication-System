@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 
 const env = require("./config/env");
 const { apiLimiter } = require("./middlewares/rateLimiter");
+const adminRoutes = require("./routes/admin.routes");
 
 const app = express();
 
@@ -21,7 +22,14 @@ app.use(cookieParser());
 app.set("trust proxy", 1);
 
 app.use("/api/auth", require("./routes/auth.routes"));
-app.use("/api/user", require("./routes/user.routes"));
+app.use("/api/users", require("./routes/user.routes"));
 app.use("/api/admin", require("./routes/admin.routes"));
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
+});
 
 module.exports = app;

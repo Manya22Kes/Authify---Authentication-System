@@ -1,5 +1,3 @@
-
-
 import Spinner from '../loaders/Spinner';
 
 /**
@@ -10,6 +8,7 @@ import Spinner from '../loaders/Spinner';
  *   leftIcon?: React.ReactNode,
  *   rightIcon?: React.ReactNode,
  *   fullWidth?: boolean,
+ *   loadingText?: string,
  *   children: React.ReactNode,
  *   [key: string]: any
  * }} props
@@ -21,6 +20,7 @@ export default function Button({
   leftIcon,
   rightIcon,
   fullWidth = false,
+  loadingText = 'Loading...',
   children,
   className = '',
   disabled,
@@ -61,7 +61,7 @@ export default function Button({
       {isLoading ? (
         <>
           <Spinner size="sm" color={variant === 'primary' ? 'dark' : 'light'} />
-          <span>Loading…</span>
+          <span>{loadingText}</span>
         </>
       ) : (
         <>

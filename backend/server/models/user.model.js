@@ -72,6 +72,22 @@ const userSchema = new mongoose.Schema(
         userAgent: String,
       },
     ],
+    avatar: {
+      type: String,
+      default: "",
+    },
+    avatarPublicId: {
+      type: String,
+      default: "",
+    },
+    passwordChangedAt: {
+      type: Date,
+      default: null,
+    },
+    emailChangedAt: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,

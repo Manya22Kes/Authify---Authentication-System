@@ -94,7 +94,7 @@ export default function Register() {
           </div>
 
           <div className="space-y-3">
-            <Button type="button" variant="secondary" fullWidth isLoading={isResending} onClick={handleResendVerification}>
+            <Button type="button" variant="secondary" fullWidth isLoading={isResending} loadingText="Sending..." onClick={handleResendVerification}>
               Resend verification email
             </Button>
             <Link to={APP_ROUTES.LOGIN} className="block">
@@ -214,6 +214,7 @@ export default function Register() {
           variant="primary"
           fullWidth
           isLoading={isLoading}
+          loadingText="Creating account..."
           className="mt-2"
         >
           Create account

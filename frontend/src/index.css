@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
@@ -43,7 +45,7 @@
 @layer components {
   /* Noise texture overlay */
   .noise-overlay::before {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
@@ -54,9 +56,9 @@
 
   /* Grid background */
   .grid-bg {
-    background-image: 
-      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     background-size: 48px 48px;
   }
 
@@ -68,7 +70,7 @@
 
   /* Glass card */
   .glass-card {
-    @apply bg-obsidian-900/80 border border-obsidian-700/60 backdrop-blur-sm;
+    @apply bg-obsidian-900/80 border border-obsidian-600/70 backdrop-blur-sm;
   }
 
   /* Input base */
@@ -117,7 +119,7 @@
 
   .divider::before,
   .divider::after {
-    content: '';
+    content: "";
     @apply flex-1 h-px bg-obsidian-700;
   }
 
@@ -154,7 +156,7 @@
   }
 
   .sidebar-item.active {
-    @apply bg-obsidian-700/80 text-ivory-100 border-l-2 border-amber-400;
+    @apply bg-obsidian-700/80 text-ivory-100 border-l-2 border-amber-400 transition-all duration-200;
     padding-left: calc(0.75rem - 2px);
   }
 }
@@ -165,13 +167,27 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    background-size: 200% auto;
+    animation: goldShimmer 5s linear infinite;
   }
 
-  .animate-delay-100 { animation-delay: 100ms; }
-  .animate-delay-200 { animation-delay: 200ms; }
-  .animate-delay-300 { animation-delay: 300ms; }
-  .animate-delay-400 { animation-delay: 400ms; }
-  .animate-delay-500 { animation-delay: 500ms; }
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animate-delay-400 {
+    animation-delay: 400ms;
+  }
+  .animate-delay-500 {
+    animation-delay: 500ms;
+  }
 
-  .opacity-0-start { opacity: 0; }
+  .opacity-0-start {
+    opacity: 0;
+  }
 }

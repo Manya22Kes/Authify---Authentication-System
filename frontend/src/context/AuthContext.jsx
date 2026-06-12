@@ -1,4 +1,3 @@
-
 import { createContext, useCallback, useEffect, useRef, useState } from 'react';
 import authService from '../services/authService';
 import axiosInstance from '../api/axios';
@@ -34,11 +33,18 @@ export function AuthProvider({ children }) {
       }
 
       const nextUser = { ...currentUser, ...updates };
-      const hasChanged = Object.keys(updates).some((key) => currentUser[key] !== nextUser[key]);
+      const hasChanged = Object.keys(updates).some(
+        (key) => currentUser[key] !== nextUser[key]
+      );
 
       return hasChanged ? nextUser : currentUser;
     });
   }, []);
+
+  // Added for Profile Management
+  const updateUser = useCallback((partialUser) => {
+    mergeUser(partialUser);
+  }, [mergeUser]);
 
   useEffect(() => {
     axiosInstance.setTokenGetter(() => accessTokenRef.current);
@@ -150,14 +156,21 @@ export function AuthProvider({ children }) {
     isAuthenticated,
     isLoading,
     isAdmin,
+
     login,
     register,
     logout,
+
     refreshSession,
     syncUser,
+
     syncVerificationStatus,
     verifyEmail,
     resendVerification,
+
+    // Added for Profile Management
+    updateUser,
+
     hasRole,
     hasAnyRole,
   };
