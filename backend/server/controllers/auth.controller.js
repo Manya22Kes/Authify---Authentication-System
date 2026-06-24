@@ -12,6 +12,7 @@ const {
   updatePasswordSchema,
   updateEmailSchema,
 } = require("../validators/user.validator");
+const passport = require("../config/passport");
 
 function cookieOptions() {
   const isProduction = env.NODE_ENV === "production";
@@ -327,5 +328,41 @@ exports.updateEmail = async (req, res) => {
       success: false,
       message: error.message,
     });
+  }
+};
+exports.googleLogin = async (req, res) => {
+  try {
+    const { credential } = req.body;
+
+    const { accessToken, refreshToken, user } =
+      await authService.googleLogin(credential);
+
+    return res
+      .cookie("refreshToken", refreshToken, cookieOptions())
+      .status(200)
+      .json({
+        success: true,
+        accessToken,
+        user,
+      });
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+exports.githubCallback = async (req, res) => {
+  try {
+    const { refreshToken } = await authService.githubLogin(req.user);
+
+    res
+      .cookie("refreshToken", refreshToken, cookieOptions())
+      .redirect(`${env.CLIENT_URL}/oauth/callback`);
+  } catch (error) {
+    console.error("GitHub login failed", error);
+
+    res.redirect(`${env.CLIENT_URL}/login`);
   }
 };

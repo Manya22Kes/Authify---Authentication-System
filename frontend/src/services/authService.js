@@ -54,6 +54,13 @@ const authService = {
       verificationEmailId: payload?.verificationEmailId ?? null,
     };
   },
+  async googleLogin(credential) {
+    const { data } = await axiosInstance.post(ENDPOINTS.GOOGLE_LOGIN, {
+      credential,
+    });
+
+    return extractSession(data);
+  },
 
   async logout() {
     await axiosInstance.post(ENDPOINTS.LOGOUT);

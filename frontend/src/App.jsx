@@ -19,6 +19,7 @@ import Register from './pages/auth/Register';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import VerifyEmail from './pages/auth/VerifyEmail';
+import OAuthCallback from './pages/auth/OAuthCallback';
 
 // Dashboard pages
 import Dashboard from './pages/dashboard/Dashboard';
@@ -73,8 +74,9 @@ export default function App() {
 
         {/* Misc public pages */}
         <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/oauth/callback" element={<OAuthCallback />} />
         <Route path="*" element={<NotFound />} />
-      </Routes>
+        </Routes>
     </>
   );
 }

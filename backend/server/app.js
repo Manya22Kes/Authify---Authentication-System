@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const env = require("./config/env");
 const { apiLimiter } = require("./middlewares/rateLimiter");
 const adminRoutes = require("./routes/admin.routes");
+const passport = require("./config/passport");
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(
   }),
 );
 app.use(cookieParser());
+app.use(passport.initialize());
 app.set("trust proxy", 1);
 
 app.use("/api/auth", require("./routes/auth.routes"));

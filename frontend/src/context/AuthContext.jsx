@@ -87,6 +87,12 @@ export function AuthProvider({ children }) {
     return result;
   }, [clearSession]);
 
+  const googleLogin = useCallback(async (credential) => {
+    const session = await authService.googleLogin(credential);
+    applySession(session);
+    return session;
+  }, [applySession]);
+
   const logout = useCallback(async () => {
     try {
       await authService.logout();
@@ -158,6 +164,7 @@ export function AuthProvider({ children }) {
     isAdmin,
 
     login,
+    googleLogin,
     register,
     logout,
 

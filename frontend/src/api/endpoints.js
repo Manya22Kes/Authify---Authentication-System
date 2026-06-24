@@ -20,10 +20,10 @@ export const ENDPOINTS = {
   CHANGE_PASSWORD: "/users/password",
   CHANGE_EMAIL: "/users/change-email",
   DELETE_ACCOUNT: "/users/account",
+  GOOGLE_LOGIN: "/auth/google",
 
   // Future: OTP, OAuth, MFA, Sessions
   // VERIFY_OTP: '/auth/verify-otp',
-  // GOOGLE_OAUTH: '/auth/google',
   // GITHUB_OAUTH: '/auth/github',
   // MFA_SETUP: '/auth/mfa/setup',
   // MFA_VERIFY: '/auth/mfa/verify',

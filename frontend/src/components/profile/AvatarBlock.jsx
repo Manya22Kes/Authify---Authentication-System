@@ -3,7 +3,7 @@ import { formatDate } from '../../utils/helpers';
 const ROLE_STYLES = {
   admin:     'bg-amber-400/10 text-amber-400 border-amber-400/20',
   moderator: 'bg-emerald-400/10 text-emerald-400 border-emerald-400/20',
-  user:      'bg-sky-400/10 text-sky-300 border border-sky-400/200',
+  user:      'bg-sky-400/10 text-sky-300 border border-sky-400/20',
 };
 
 export default function AvatarBlock({
@@ -38,6 +38,8 @@ export default function AvatarBlock({
             src={user.avatar}
             alt={user.name}
             className="w-full h-full object-cover"
+            loading="lazy"
+            referrerPolicy="no-referrer"
           />
         ) : (
           <span className="font-display font-bold text-3xl text-amber-400 select-none">

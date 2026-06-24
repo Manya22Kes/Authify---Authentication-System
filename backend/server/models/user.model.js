@@ -19,7 +19,6 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: true,
       minlength: 6,
       select: false,
     },
@@ -86,6 +85,23 @@ const userSchema = new mongoose.Schema(
     },
     emailChangedAt: {
       type: Date,
+      default: null,
+    },
+    googleId: {
+      type: String,
+      default: null,
+    },
+    authProvider: {
+      type: String,
+      enum: ["local", "google", "github"],
+      default: "local",
+    },
+    githubId: {
+      type: String,
+      default: null,
+    },
+    githubUsername: {
+      type: String,
       default: null,
     },
   },

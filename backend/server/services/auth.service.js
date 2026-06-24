@@ -1,5 +1,9 @@
-const crypto = require("crypto");
+const { createHash, randomBytes } = require("crypto");
 const env = require("../config/env");
+
+const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
+const CLIENT_URL = env.CLIENT_URL;
+const REQUIRE_EMAIL_VERIFICATION = env.REQUIRE_EMAIL_VERIFICATION;
 const User = require("../models/user.model");
 
 const {
@@ -19,8 +23,7 @@ const LOGIN_HISTORY_LIMIT = 20;
 const RECENTLY_VERIFIED_TOKEN_TTL_MS = 10 * 60 * 1000;
 const recentlyVerifiedTokens = new Map();
 
-const hashToken = (token) =>
-  crypto.createHash("sha256").update(token).digest("hex");
+const hashToken = (token) => createHash("sha256").update(token).digest("hex");
 
 const sanitizeUser = (user) => ({
   id: user._id,
@@ -32,13 +35,16 @@ const sanitizeUser = (user) => ({
   updatedAt: user.updatedAt,
   lastLoginAt: user.lastLoginAt || null,
 });
+const { OAuth2Client } = require("google-auth-library");
+
+const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
 function buildVerificationUrl(rawToken) {
-  return `${env.CLIENT_URL}/verify-email/${rawToken}`;
+  return `${CLIENT_URL}/verify-email/${rawToken}`;
 }
 
 function buildVerificationToken() {
-  const rawToken = crypto.randomBytes(32).toString("hex");
+  const rawToken = randomBytes(32).toString("hex");
 
   return {
     rawToken,
@@ -110,6 +116,110 @@ async function issueAndSendVerification(user) {
 
   return {
     delivery,
+  };
+}
+async function googleLogin(credential) {
+  const ticket = await client.verifyIdToken({
+    idToken: credential,
+    audience: GOOGLE_CLIENT_ID,
+  });
+
+  const payload = ticket.getPayload();
+
+  const email = payload.email;
+  const name = payload.name;
+  const googleId = payload.sub;
+  const avatar = payload.picture;
+
+  let user = await User.findOne({ email });
+
+  if (!user) {
+    user = await User.create({
+      name,
+      email,
+      googleId,
+      avatar,
+      isVerified: true,
+      authProvider: "google",
+    });
+  } else {
+    if (!user.googleId) {
+      user.googleId = googleId;
+      user.authProvider = "google";
+    }
+
+    if (!user.isVerified) {
+      user.isVerified = true;
+    }
+  }
+
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user);
+
+  user.refreshToken = hashToken(refreshToken);
+  user.refreshTokenExpires = new Date(Date.now() + REFRESH_WINDOW_MS);
+
+  await user.save();
+
+  return {
+    accessToken,
+    refreshToken,
+    user: sanitizeUser(user),
+  };
+}
+
+async function githubLogin(profile) {
+  const email = profile.emails?.[0]?.value;
+
+  if (!email) {
+    throw new Error("GitHub account does not provide an email address");
+  }
+
+  const githubId = profile.id;
+  const githubUsername = profile.username;
+  const name = profile.displayName || profile.username;
+  const avatar = profile.photos?.[0]?.value;
+
+  let user = await User.findOne({ email });
+
+  if (!user) {
+    user = await User.create({
+      name,
+      email,
+      githubId,
+      githubUsername,
+      avatar,
+      isVerified: true,
+      authProvider: "github",
+    });
+  } else {
+    if (!user.githubId) {
+      user.githubId = githubId;
+      user.githubUsername = githubUsername;
+      user.authProvider = "github";
+    }
+
+    if (!user.avatar && avatar) {
+      user.avatar = avatar;
+    }
+
+    if (!user.isVerified) {
+      user.isVerified = true;
+    }
+  }
+
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user);
+
+  user.refreshToken = hashToken(refreshToken);
+  user.refreshTokenExpires = new Date(Date.now() + REFRESH_WINDOW_MS);
+
+  await user.save();
+
+  return {
+    accessToken,
+    refreshToken,
+    user: sanitizeUser(user),
   };
 }
 
@@ -247,7 +357,7 @@ exports.sendTestEmail = async ({ email, name }) => {
     throw new Error("Recipient email is required");
   }
 
-  const rawToken = crypto.randomBytes(16).toString("hex");
+  const rawToken = randomBytes(16).toString("hex");
   const delivery = await sendVerificationEmail(
     email,
     name || "there",
@@ -279,7 +389,7 @@ exports.login = async ({ email, password }, metadata = {}) => {
     throw new Error("Invalid credentials");
   }
 
-  if (env.REQUIRE_EMAIL_VERIFICATION && !user.isVerified) {
+  if (REQUIRE_EMAIL_VERIFICATION && !user.isVerified) {
     throw new Error("Please verify your email before logging in");
   }
 
@@ -303,13 +413,15 @@ exports.login = async ({ email, password }, metadata = {}) => {
     user: sanitizeUser(user),
     verification: {
       isVerified: user.isVerified,
-      loginBlockedUntilVerified: env.REQUIRE_EMAIL_VERIFICATION,
+      loginBlockedUntilVerified: REQUIRE_EMAIL_VERIFICATION,
       warning: user.isVerified
         ? null
         : "Email not verified yet. Please check your inbox for the verification link.",
     },
   };
 };
+exports.googleLogin = googleLogin;
+exports.githubLogin = githubLogin;
 
 exports.refreshToken = async (oldToken) => {
   if (!oldToken) {
@@ -352,7 +464,7 @@ exports.refreshToken = async (oldToken) => {
     user: sanitizeUser(user),
     verification: {
       isVerified: user.isVerified,
-      loginBlockedUntilVerified: env.REQUIRE_EMAIL_VERIFICATION,
+      loginBlockedUntilVerified: REQUIRE_EMAIL_VERIFICATION,
       warning: user.isVerified
         ? null
         : "Email not verified yet. Please verify your account.",
@@ -385,7 +497,7 @@ exports.forgotPassword = async (email) => {
     return null;
   }
 
-  const resetToken = crypto.randomBytes(32).toString("hex");
+  const resetToken = randomBytes(32).toString("hex");
   const hashedToken = hashToken(resetToken);
 
   user.resetPasswordToken = hashedToken;
