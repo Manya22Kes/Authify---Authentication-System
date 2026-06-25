@@ -199,21 +199,21 @@ backend/
 
 ## 🚀 Getting Started
 
-Clone the repository
-git clone https://github.com/YOUR_USERNAME/Authify.git
-cd Authify
+- Clone the repository
+- git clone https://github.com/YOUR_USERNAME/Authify.git
+- cd Authify
 
 ## Backend
 
-cd backend
-npm install
-npm start
+- cd backend
+- npm install
+- npm start
 
 ## Frontend
 
-cd frontend
-npm install
-npm run dev
+- cd frontend
+- npm install
+- npm run dev
 
 ---
 
