@@ -106,7 +106,51 @@ async function sendPasswordResetEmail(email, name, resetUrl) {
   });
 }
 
+async function sendWelcomeEmail(email, name) {
+  return sendEmail({
+    to: email,
+    subject: "Welcome to Authify 🎉",
+    html: `
+      <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111827;">
+        <h2 style="margin-bottom:12px;">Welcome to Authify, ${name} 🎉</h2>
+        <p style="margin:0 0 16px;">
+          Thanks for joining Authify. Your account is ready to help you sign in securely with modern authentication and security features.
+        </p>
+        <p style="margin:0 0 8px;">
+          You can enjoy secure authentication, password reset support, OAuth sign-in, and account protection built for your peace of mind.
+        </p>
+        <p style="margin:0;">If you have any questions, we're here to help.</p>
+        <p style="margin:16px 0 0;">— Authify Security</p>
+      </div>
+    `,
+  });
+}
+
+async function sendLoginNotificationEmail(email, name, provider) {
+  return resend.emails.send({
+    from: env.RESEND_FROM_EMAIL,
+    to: email,
+    subject: "New sign in to your Authify account",
+    html: `
+      <h2>Hello ${name},</h2>
+
+      <p>A new sign in to your <strong>Authify</strong> account was detected.</p>
+
+      <p><strong>Sign-in method:</strong> ${provider}</p>
+
+      <p>If this was you, no action is required.</p>
+
+      <p>If you don't recognize this sign in, please change your password immediately.</p>
+
+      <br>
+
+      <p>— Authify Security</p>
+    `,
+  });
+}
 module.exports = {
   sendVerificationEmail,
   sendPasswordResetEmail,
+  sendWelcomeEmail,
+  sendLoginNotificationEmail,
 };

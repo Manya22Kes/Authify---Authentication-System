@@ -15,6 +15,8 @@ const {
 const {
   sendVerificationEmail,
   sendPasswordResetEmail,
+  sendWelcomeEmail,
+  sendLoginNotificationEmail,
 } = require("./email.service");
 
 const VERIFICATION_WINDOW_MS = 60 * 60 * 1000;
@@ -132,6 +134,7 @@ async function googleLogin(credential) {
   const avatar = payload.picture;
 
   let user = await User.findOne({ email });
+  let isNewUser = false;
 
   if (!user) {
     user = await User.create({
@@ -142,6 +145,7 @@ async function googleLogin(credential) {
       isVerified: true,
       authProvider: "google",
     });
+    isNewUser = true;
   } else {
     if (!user.googleId) {
       user.googleId = googleId;
@@ -160,6 +164,17 @@ async function googleLogin(credential) {
   user.refreshTokenExpires = new Date(Date.now() + REFRESH_WINDOW_MS);
 
   await user.save();
+
+  if (isNewUser) {
+    try {
+      await sendWelcomeEmail(user.email, user.name);
+    } catch (error) {
+      console.error("Welcome email failed", {
+        email: user.email,
+        message: error.message,
+      });
+    }
+  }
 
   return {
     accessToken,
@@ -181,6 +196,7 @@ async function githubLogin(profile) {
   const avatar = profile.photos?.[0]?.value;
 
   let user = await User.findOne({ email });
+  let isNewUser = false;
 
   if (!user) {
     user = await User.create({
@@ -192,6 +208,7 @@ async function githubLogin(profile) {
       isVerified: true,
       authProvider: "github",
     });
+    isNewUser = true;
   } else {
     if (!user.githubId) {
       user.githubId = githubId;
@@ -215,6 +232,17 @@ async function githubLogin(profile) {
   user.refreshTokenExpires = new Date(Date.now() + REFRESH_WINDOW_MS);
 
   await user.save();
+
+  if (isNewUser) {
+    try {
+      await sendWelcomeEmail(user.email, user.name);
+    } catch (error) {
+      console.error("Welcome email failed", {
+        email: user.email,
+        message: error.message,
+      });
+    }
+  }
 
   return {
     accessToken,
@@ -249,6 +277,15 @@ exports.signup = async (data) => {
       user.name,
       buildVerificationUrl(verification.rawToken),
     );
+
+    try {
+      await sendWelcomeEmail(user.email, user.name);
+    } catch (error) {
+      console.error("Welcome email failed", {
+        email: user.email,
+        message: error.message,
+      });
+    }
 
     return {
       user: sanitizeUser(user),
